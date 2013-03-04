@@ -1,4 +1,4 @@
-pages
+Pages
 =====
 
 Pages based on `entropy`
