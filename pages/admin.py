@@ -3,14 +3,18 @@ from pages import models as page_models
 
 try:
     # Only import from platforms if it is a dependancy
-    from platforms import admin as platforms_admin
-    # Use platform mixin if platforms is found as a dependancy
-    PlatformInlineMixin = platforms_admin.PlatformInlineMixin
+    from platforms import settings as platforms_settings
+    if platforms_settings.USE_PLATFORMS:
+        from platforms import admin as platforms_admin
+        # Use platform mixin if platforms is found as a dependancy
+        PlatformObjectInline = [platforms_admin.PlatformObjectInline]
+    else:
+        raise ImportError
 except ImportError:
-    PlatformInlineMixin = object()
+    PlatformObjectInline = []
 
 
-class PageAdmin(PlatformInlineMixin, admin.ModelAdmin):
+class PageAdmin(admin.ModelAdmin):    
     actions_on_top = True
 
     list_display = ('title', 'slug',)
@@ -19,6 +23,8 @@ class PageAdmin(PlatformInlineMixin, admin.ModelAdmin):
     prepopulated_fields = {
         "slug": ("title",)
     }
+
+    inlines = PlatformObjectInline
 
     fieldsets = (
         # (None, {
