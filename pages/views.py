@@ -16,6 +16,11 @@ class AllPages(PlatformListMixin, ListView):
     model=Page
     template_name = "pages/page_list.html"
 
+    def get_queryset(self):
+        return super(AllPages, self).get_queryset().filter(
+            enabled=True
+            )
+
 
 def all_pages(request):
     return AllPages.as_view()(request)
@@ -24,6 +29,11 @@ def all_pages(request):
 class DetailPage(PlatformDetailMixin, DetailView):
     model = Page
     template_name = "pages/page_detail.html"
+
+    def get_queryset(self):
+        return super(DetailPage, self).get_queryset().filter(
+            enabled=True
+            )
 
 
 def detail(request, slug):

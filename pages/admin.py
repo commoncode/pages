@@ -17,8 +17,10 @@ except ImportError:
 class PageAdmin(admin.ModelAdmin):    
     actions_on_top = True
 
-    list_display = ('title', 'slug',)
+    list_display = ('title', 'slug', 'enabled',)
     search_fields = ('title', 'slug',)
+    list_filter = ('enabled',)
+    list_editable = ( 'enabled',)
 
     prepopulated_fields = {
         "slug": ("title",)
@@ -27,11 +29,11 @@ class PageAdmin(admin.ModelAdmin):
     inlines = PlatformObjectInline
 
     fieldsets = (
-        # (None, {
-        #     'fields': (
-        #         'enabled',
-        #     )
-        # }),
+        (None, {
+            'fields': (
+                'enabled',
+            )
+        }),
         ("Content", {
             'fields': [
                 'title',

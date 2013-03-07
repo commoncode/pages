@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 from entropy.base import SlugMixin, TitleMixin, TextMixin
+from entropy.fields import EnabledField
 
 try:
     # Only import from platforms if it is a dependancy
@@ -16,6 +17,8 @@ except ImportError:
     
 
 class Page(SlugMixin, TitleMixin, TextMixin):
+
+    enabled = EnabledField()
 
     objects = ObjectManager()
 
