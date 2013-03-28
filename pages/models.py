@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 from entropy.base import SlugMixin, TitleMixin, TextMixin
+from entropy.base import SlugMixin, TitleMixin, ModifiedMixin, CreatedMixin, MetadataMixin, PublishingStatusMixin
 from entropy.fields import EnabledField
 
 try:
@@ -16,9 +17,13 @@ except ImportError:
     ObjectManager = models.Manager
     
 
-class Page(SlugMixin, TitleMixin, TextMixin):
+class Page(SlugMixin, TitleMixin, TextMixin, ModifiedMixin, CreatedMixin, PublishingStatusMixin):
 
     enabled = EnabledField()
+
+    featured = models.BooleanField(default=False)
+
+    published_date = models.DateField(null=True)
 
     objects = ObjectManager()
 

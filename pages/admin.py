@@ -31,7 +31,7 @@ class PageAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': (
-                'enabled',
+                'enabled', 'featured', 'publishing_status', 'published_date',
             )
         }),
         ("Content", {
