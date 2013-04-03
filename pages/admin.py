@@ -1,4 +1,5 @@
 from django.contrib import admin
+from entropy.admin import InlineAttributeAdmin
 from pages import models as page_models
 
 try:
@@ -14,6 +15,11 @@ except ImportError:
     PlatformObjectInline = []
 
 
+class PageSetting(InlineAttributeAdmin):
+    verbose_name = "Page Setting"
+    verbose_name_plural = verbose_name + 's'
+
+
 class PageAdmin(admin.ModelAdmin):    
     actions_on_top = True
 
@@ -26,7 +32,9 @@ class PageAdmin(admin.ModelAdmin):
         "slug": ("title",)
     }
 
-    inlines = PlatformObjectInline
+    inlines = [
+        PageSetting
+    ] + PlatformObjectInline
 
     fieldsets = (
         (None, {
