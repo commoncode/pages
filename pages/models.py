@@ -1,8 +1,9 @@
 from django.db import models
 from django.core.urlresolvers import reverse
-from entropy.base import (
-    SlugMixin, TitleMixin, TextMixin, ModifiedMixin, CreatedMixin, 
-    PublishingStatusMixin, AttributeMixin)
+
+from cqrs.models import CQRSModel
+from entropy.base import (SlugMixin, TitleMixin, TextMixin, ModifiedMixin,
+    CreatedMixin, PublishingStatusMixin, AttributeMixin)
 from entropy.fields import EnabledField
 
 try:
@@ -16,14 +17,13 @@ try:
         raise ImportError
 except ImportError:
     ObjectManager = models.Manager
-    
 
-class Page(SlugMixin, TitleMixin, TextMixin, ModifiedMixin, CreatedMixin, PublishingStatusMixin, AttributeMixin):
+
+class Page(CQRSModel, SlugMixin, TitleMixin, TextMixin, ModifiedMixin,
+    CreatedMixin, PublishingStatusMixin, AttributeMixin):
 
     enabled = EnabledField()
-
     featured = models.BooleanField(default=False)
-
     published_date = models.DateField(null=True)
 
     objects = ObjectManager()
