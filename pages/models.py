@@ -3,12 +3,12 @@ from django.core.urlresolvers import reverse
 
 from cqrs.models import CQRSModel
 from entropy.base import (SlugMixin, TitleMixin, TextMixin, ModifiedMixin,
-    CreatedMixin, PublishingStatusMixin, AttributeMixin)
+                          CreatedMixin, PublishingStatusMixin, AttributeMixin)
 from entropy.fields import EnabledField
 
 
 class Page(CQRSModel, SlugMixin, TitleMixin, TextMixin, ModifiedMixin,
-    CreatedMixin, PublishingStatusMixin, AttributeMixin):
+           CreatedMixin, PublishingStatusMixin, AttributeMixin):
 
     enabled = EnabledField()
     featured = models.BooleanField(default=False)
